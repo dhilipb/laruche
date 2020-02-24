@@ -4,14 +4,18 @@
   const baseUrl = "https://laruchequebec.com";
   const url = baseUrl + "/explorer/projets/termines/?search=&region=&ruchePartner=0&orderBy=&category=0&sector=0&page=";
   window.scrapedData = [];
+  window.scrapedPages = 0;
+  document.querySelector("body").innerHTML = `<h4>Pages: <div id="pages">0</div><br /> Items: <div id="items">0</div></h4>`;
+
 
   const run = i => {
-    if (i === 52) {
-        console.log(window.scrapedData);
-        // copy(window.scrapedData);
+    if (i === 55) {
+        alert("Done");
         return;
     }
     setTimeout(() => {
+      document.querySelector("#items").innerHTML = window.scrapedData.length;
+      document.querySelector("#pages").innerHTML = window.scrapedPages;
     	
       // Get per page
       $.get(url + i, html => {
@@ -47,10 +51,10 @@
               perks: pPerks,
               questions: pQuestions
             });
-
           });
         });
-
+        
+        window.scrapedPages++;
         run(i + 1);
 
       });
